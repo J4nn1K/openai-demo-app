@@ -56,3 +56,6 @@ def index():
         return render_template('index.html', image_prompt=image_prompt, image_url=resp, image_error=error)
     
     return render_template('index.html')
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
