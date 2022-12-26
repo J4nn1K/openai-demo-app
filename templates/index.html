@@ -4,84 +4,129 @@
 <head>
   <title>Jannik's OpenAI Demo App</title>
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono" rel="stylesheet">
   <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
 </head>
 
-<body>
-  <h1 class="text-3xl font-bold underline">OpenAI Demo App</h1>
-  <p>built by Jannik Grothusen</p>
-  <h2>Text Completion (GPT-3)</h2>
+<body class="h-full flex-col bg-gray-100 grid place-items-center">
+  <div class="py-20">
+    <div class="rounded-3xl p-4 sm:p-10 mx-2 sm:mx-10  max-w-2xl shadow-lg shadow-gray-900/5 bg-white">
+      <h1 class="text-3xl sm:text-4xl font-bold">OpenAI's Powerful Models</h1>
+      <p class="text-sm text-gray-500 mt-2">built by Jannik Grothusen</p>
+      
+      <h1 class="mt-4 text-2xl font-bold">Text Completion (GPT-3)</h1>
 
-  <form method="post" id="completion-form">
-    
-    <input type="radio" id="text-davinci-003" name="completion_model" value="text-davinci-003">
-    <label for="text-davinci-003">text-davinci-003 (Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following.)</label><br>
-    <input type="radio" id="text-curie-001" name="completion_model" value="text-curie-001">
-    <label for="text-curie-001">text-curie-001 (Very capable, but faster and lower cost than Davinci.)</label><br>
-    <input type="radio" id="text-babbage-001" name="completion_model" value="text-babbage-001">
-    <label for="text-babbage-001">text-babbage-001 (Capable of straightforward tasks, very fast, and lower cost.)</label><br>
-    <input type="radio" id="text-ada-001" name="completion_model" value="text-ada-001" checked>
-    <label for="text-ada-001">text-ada-001 (Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost.)</label><br>
-    
-    <label for="completion_prompt">Prompt</label><br>
-    <input type="text" name="completion_prompt" id="completion_prompt">
-    
-    <button type="submit">Submit</button>
-  </form>
+      <form class="mt-1" method="post" id="completion-form">
+        <p class="contents text-base font-medium text-gray-900">Model Selection</p>
+        <p class="text-sm text-gray-500">More information on the different GPT-3 models can be found <a class="underline hover:text-gray-800" href="https://beta.openai.com/docs/models/gpt-3">here</a>. The selection selection always defaults to Ada after submitting a prompt.</p>
 
-  {% if completion_prompt %}
-    <p><b>Prompt: </b>{{ completion_prompt }}</p>
-  {% endif %}
+        <div class="my-2 space-y-2">
+          <div class="flex items-center">
+            <input class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" type="radio"
+              id="text-davinci-003" name="completion_model" value="text-davinci-003">
+            <label class="ml-3 block text-sm font-mono font-medium text-gray-700"
+              for="text-davinci-003">text-davinci-003</label><br>
+          </div>
 
-  {% if completion_response %}
-    <p><b>Response: </b>{{ completion_response }}</p>
-  {% endif%}
+          <div class="flex items-center">
+            <input class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" type="radio"
+              id="text-curie-001" name="completion_model" value="text-curie-001">
+            <label class="ml-3 block text-sm font-mono font-medium text-gray-700"
+              for="text-curie-001">text-curie-001</label><br>
+          </div>
+          <div class="flex items-center">
+            <input class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" type="radio"
+              id="text-babbage-001" name="completion_model" value="text-babbage-001">
+            <label class="ml-3 block text-sm font-mono font-medium text-gray-700"
+              for="text-babbage-001">text-babbage-001</label><br>
+          </div>
+          <div class="flex items-center">
+            <input class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" type="radio" id="text-ada-001"
+              name="completion_model" value="text-ada-001" checked>
+            <label class="ml-3 block text-sm font-mono font-medium text-gray-700"
+              for="text-ada-001">text-ada-001</label><br>
+          </div>
+        </div>
+
+        <p class="contents text-base font-medium text-gray-900">Prompt</p>
+        <p class="text-sm text-gray-500">More information can be found here.</p>
+
+        <div class="flex flex-row">
+          <!-- <label class="block text-sm font-medium text-gray-700" for="completion_prompt">Prompt</label> -->
+          <input
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+            type="text" name="completion_prompt" id="completion_prompt">
+
+          <button type="submit"
+            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
+        </div>
+
+      </form>
+
+      {% if completion_prompt %}
+      <p><b>Prompt: </b>{{ completion_prompt }}</p>
+      {% endif %}
+
+      {% if completion_response %}
+      <p><b>Response: </b>{{ completion_response }}</p>
+      {% endif%}
 
 
-  <h2>Image Generation (DALL·E 2)</h2>
-  <form method="post" id="image-form">
-    <label for="image_prompt">Prompt</label><br>
-    <input type="text" name="image_prompt" id="image_prompt">
-    <button type="submit">Submit</button>
-  </form>
+      <h1 class="mt-6 text-2xl font-bold">Image Generation (DALL·E 2)</h1>
+      <form class="mt-1" method="post" id="image-form">
 
-  {% if image_prompt %}
-    <p><b>Prompt: </b>{{ image_prompt }}</p>
-  {% endif %}
+        <p class="contents text-base font-medium text-gray-900">Prompt</p>
+        <p class="text-sm text-gray-500">More information can be found here.</p>
 
-  {% if image_url %}
-    <p><b>Image:</b></p>
-    <image src="{{ image_url }}"/>
-  {% endif%}
+        <input
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+          type="text" name="image_prompt" id="image_prompt">
+        <button type="submit"
+          class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
+      </form>
+
+      {% if image_prompt %}
+      <p class="text-sm text-gray-500 italic mt-4 mb-2">"{{ image_prompt }}"</p>
+      {% endif %}
+
+      {% if image_url %}
+      <!-- <p><b>Image:</b></p> -->
+      <div>
+        <image src="{{ image_url }}" class="w-full rounded-2xl shadow-lg shadow-gray-900/5"/>
+      </div>
+      {% endif%}
 
 
-  <!-- AJAX with jQuery -->
-  <script src="{{ url_for('static', filename='jquery.js') }}"></script>
+      <!-- AJAX with jQuery -->
+      <script src="{{ url_for('static', filename='jquery.js') }}"></script>
 
-  <script type="text/javascript">
-    $(document).on('submit', '#completion-form', function (e) {
-        e.preventDefault();
-        $.ajax({
-          type: 'POST',
-          url: '/',
-          data: {
-            completion_model: $("#completion_model").val(),
-            completion_prompt: $("#completion_prompt").val(),
-          },
-        })
-    });
+      <script type="text/javascript">
+        $(document).on('submit', '#completion-form', function (e) {
+          e.preventDefault();
+          $.ajax({
+            type: 'POST',
+            url: '/',
+            data: {
+              completion_model: $("#completion_model").val(),
+              completion_prompt: $("#completion_prompt").val(),
+            },
+          })
+        });
 
-    $(document).on('submit', '#image-form', function (e) {
-        e.preventDefault();
-        $.ajax({
-          type: 'POST',
-          url: '/',
-          data: {
-            image_prompt: $("#image_prompt").val()
-          },
-        })
-    });
-  </script>
+        $(document).on('submit', '#image-form', function (e) {
+          e.preventDefault();
+          $.ajax({
+            type: 'POST',
+            url: '/',
+            data: {
+              image_prompt: $("#image_prompt").val()
+            },
+          })
+        });
+      </script>
+      <!-- </div> -->
+    </div>
+  </div>
 
 </body>
 
