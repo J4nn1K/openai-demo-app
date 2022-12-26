@@ -1,0 +1,22 @@
+{
+  "name": "openai-demo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J4nn1K/openai-demo-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J4nn1K/openai-demo-app/issues"
+  },
+  "homepage": "https://github.com/J4nn1K/openai-demo-app#readme",
+  "dependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}
