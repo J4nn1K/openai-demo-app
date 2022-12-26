@@ -6,10 +6,26 @@
 </head>
 
 <body>
+  <h1>Completion</h1>
+
   <form method="post" id="prompt-form">
     <input type="text" name="prompt" id="prompt">
     <button type="submit">Submit</button>
   </form>
+
+  {% if prompt %}
+    <p><b>Prompt: </b>{{ prompt }}</p>
+  {% endif %}
+
+  {% if response %}
+    <p><b>Response: </b>{{ response }}</p>
+  {% endif%}
+
+  <h1>Edits</h1>
+
+
+  <h1>Images</h1>
+
 
   <!-- AJAX with jQuery -->
   <script src="{{ url_for('static', filename='jquery.js') }}"></script>
