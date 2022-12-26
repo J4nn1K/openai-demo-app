@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Markup
 import openai
 import os
 
@@ -11,38 +11,48 @@ app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    if request.method == "POST":
-
-      print(request.form.get("completion_prompt"))
-      
+    if request.method == "POST":      
       if request.form.get("completion_prompt"):
         completion_prompt = request.form.get("completion_prompt")
         completion_model = request.form.get("completion_model")
 
-        response = openai.Completion.create(
-          model=completion_model,
-          prompt=completion_prompt, 
-          temperature=0, 
-          max_tokens=3
+        resp = None
+        error = None
+
+        try:
+          response = openai.Completion.create(
+            model=completion_model,
+            prompt=completion_prompt, 
+            temperature=0, 
+            max_tokens=512
           )
+          print(response)
+          resp = response["choices"][0]["text"]
+          resp = Markup(resp.lstrip("\n").replace('\n', '<br>'))
 
-        print(response)
+        except openai.error.OpenAIError as e:
+          error = e
 
-        return render_template('index.html', completion_prompt=completion_prompt, completion_response=response["choices"][0]["text"])
+        return render_template('index.html', completion_prompt=completion_prompt, completion_response=resp, completion_error=error)
+
 
       if request.form.get("image_prompt"):
         image_prompt = request.form.get("image_prompt")
+        
+        resp = None
+        error = None
 
-        print(image_prompt)
+        try:
+          response = openai.Image.create(
+            prompt=image_prompt,
+            n=1,
+            size="512x512"
+          )        
+          resp = response['data'][0]['url']
 
-        response = openai.Image.create(
-          prompt=image_prompt,
-          n=1,
-          size="512x512"
-        )
+        except openai.error.OpenAIError as e:
+          error = e
 
-        print(response)
-
-        return render_template('index.html', image_prompt=image_prompt, image_url=response['data'][0]['url'])
+        return render_template('index.html', image_prompt=image_prompt, image_url=resp, image_error=error)
     
     return render_template('index.html')

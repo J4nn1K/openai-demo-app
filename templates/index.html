@@ -13,17 +13,22 @@
     <div class="rounded-3xl p-4 sm:p-10 mx-2 sm:mx-10  max-w-2xl shadow-lg shadow-gray-900/5 bg-white">
       <h1 class="text-3xl sm:text-4xl font-bold">OpenAI's Powerful Models</h1>
       <p class="text-sm text-gray-500 mt-2">built by Jannik Grothusen</p>
-      
-      <h1 class="mt-4 text-2xl font-bold">Text Completion (GPT-3)</h1>
 
-      <form class="mt-1" method="post" id="completion-form">
+      <h1 class="mt-4 text-2xl font-bold">Text Completion (GPT-3)</h1>
+      <p class="mt-1 text-sm text-gray-500">GPT-3 models can understand and generate natural language.</p>
+
+      <form class="mt-2" method="post" id="completion-form">
         <p class="contents text-base font-medium text-gray-900">Model Selection</p>
-        <p class="text-sm text-gray-500">More information on the different GPT-3 models can be found <a class="underline hover:text-gray-800" href="https://beta.openai.com/docs/models/gpt-3">here</a>. The selection selection always defaults to Ada after submitting a prompt.</p>
+        <p class="text-sm text-gray-500">Information on the different GPT-3 models can be found <a
+            class="underline hover:text-gray-800" href="https://beta.openai.com/docs/models/gpt-3"
+            target="_blank">here</a>. The selection always defaults to Davinci after submitting a prompt. The maximum number of <a
+            class="underline hover:text-gray-800" href="https://beta.openai.com/tokenizer"
+            target="_blank">tokens</a> to generate in the completion is set to 512.</p>
 
         <div class="my-2 space-y-2">
           <div class="flex items-center">
             <input class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" type="radio"
-              id="text-davinci-003" name="completion_model" value="text-davinci-003">
+              id="text-davinci-003" name="completion_model" value="text-davinci-003" checked>
             <label class="ml-3 block text-sm font-mono font-medium text-gray-700"
               for="text-davinci-003">text-davinci-003</label><br>
           </div>
@@ -42,57 +47,75 @@
           </div>
           <div class="flex items-center">
             <input class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" type="radio" id="text-ada-001"
-              name="completion_model" value="text-ada-001" checked>
+              name="completion_model" value="text-ada-001" >
             <label class="ml-3 block text-sm font-mono font-medium text-gray-700"
               for="text-ada-001">text-ada-001</label><br>
           </div>
         </div>
 
         <p class="contents text-base font-medium text-gray-900">Prompt</p>
-        <p class="text-sm text-gray-500">More information can be found here.</p>
+        <p class="text-sm text-gray-500">Try: <span class="italic">How many moons does Mars have?</span></p>
 
-        <div class="flex flex-row">
+        <div class="flex flex-row pt-1">
           <!-- <label class="block text-sm font-medium text-gray-700" for="completion_prompt">Prompt</label> -->
           <input
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
             type="text" name="completion_prompt" id="completion_prompt">
 
           <button type="submit"
-            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
+            class="ml-1 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">▶</button>
         </div>
 
       </form>
 
       {% if completion_prompt %}
-      <p><b>Prompt: </b>{{ completion_prompt }}</p>
+        <p class="text-sm text-gray-500 italic mt-4 mb-2">"{{ completion_prompt }}"</p>
+      {% endif %}
+
+      {% if completion_error %}
+        <div class="p-4 text-sm text-red-700 bg-red-100 rounded-md dark:bg-red-200 dark:text-red-800" role="alert">
+          {{ completion_error }}
+        </div>
       {% endif %}
 
       {% if completion_response %}
-      <p><b>Response: </b>{{ completion_response }}</p>
+        <div class="p-4 text-sm text-green-700 bg-green-100 rounded-md dark:bg-green-200 dark:text-green-800" role="alert">
+          {{ completion_response }}
+        </div>
       {% endif%}
 
 
-      <h1 class="mt-6 text-2xl font-bold">Image Generation (DALL·E 2)</h1>
-      <form class="mt-1" method="post" id="image-form">
+      <h1 class="mt-6 text-2xl font-bold">Image Generation (DALL·E)</h1>
+      <p class="mt-1 text-sm text-gray-500">DALL·E is a version of GPT-3. It creates images from text captions.</p>
+
+      <form class="mt-2" method="post" id="image-form">
 
         <p class="contents text-base font-medium text-gray-900">Prompt</p>
-        <p class="text-sm text-gray-500">More information can be found here.</p>
-
+        <p class="text-sm text-gray-500">Try: <span class="italic">An astronaut lounging in a tropical resort in space in a vaporwave style</span></p>
+      
+        <div class="flex flex-row pt-1">
         <input
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
           type="text" name="image_prompt" id="image_prompt">
         <button type="submit"
-          class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
-      </form>
+          class="ml-1 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">▶</button>
+        </div>
+        </form>
 
+      
       {% if image_prompt %}
-      <p class="text-sm text-gray-500 italic mt-4 mb-2">"{{ image_prompt }}"</p>
+        <p class="text-sm text-gray-500 italic mt-4 mb-2">"{{ image_prompt }}"</p>
+      {% endif %}
+      
+      {% if image_error %}
+        <div class="p-4 text-sm text-red-700 bg-red-100 rounded-md dark:bg-red-200 dark:text-red-800" role="alert">
+          {{ image_error }}
+        </div>
       {% endif %}
 
       {% if image_url %}
-      <!-- <p><b>Image:</b></p> -->
       <div>
-        <image src="{{ image_url }}" class="w-full rounded-2xl shadow-lg shadow-gray-900/5"/>
+        <image src="{{ image_url }}" class="w-full rounded-md shadow-lg shadow-gray-900/5" />
       </div>
       {% endif%}
 
@@ -124,7 +147,6 @@
           })
         });
       </script>
-      <!-- </div> -->
     </div>
   </div>
 
