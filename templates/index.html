@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Jannik's OpenAI Demo App</title>
+</head>
+
+<body>
+  <form method="post" id="prompt-form">
+    <input type="text" name="prompt" id="prompt">
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- AJAX with jQuery -->
+  <script src="{{ url_for('static', filename='jquery.js') }}"></script>
+
+  <script type="text/javascript">
+    $(document).on('submit', '#prompt-form', function (e) {
+      // console.log('hello');
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '/',
+        data: {
+          prompt: $("#prompt").val()
+        },
+      })
+    });
+  </script>
+
+</body>
+
+</html>
