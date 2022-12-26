@@ -12,7 +12,7 @@
 
 <body class="h-full flex-col bg-gray-100 grid place-items-center">
   <div class="py-20">
-    <div class="rounded-3xl p-4 sm:p-10 mx-2 sm:mx-10  max-w-2xl shadow-lg shadow-gray-900/5 bg-white">
+    <div class="rounded-3xl p-4 sm:p-10 mx-2 sm:mx-10 max-w-2xl shadow-lg shadow-gray-900/5 bg-white">
       <h1 class="text-3xl sm:text-4xl font-bold">OpenAI's Powerful Models</h1>
       <p class="text-sm text-gray-500 mt-2">This is a demo application to test <a class="underline hover:text-gray-800"
           href="https://openai.com/" target="_blank">OpenAI</a>'s API. The source code can be
@@ -87,7 +87,7 @@
       {% if completion_response %}
       <div class="p-4 text-sm text-green-700 bg-green-100 rounded-md dark:bg-green-200 dark:text-green-800"
         role="alert">
-        {{ completion_response }}
+        <p class="truncate">{{ completion_response }}</p>
       </div>
       {% endif%}
 
