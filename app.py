@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, Markup
 import openai
 import os
+import logging
 
 try:
   openai.api_key = os.environ['OPENAI_API_KEY']
@@ -16,8 +17,8 @@ def index():
         completion_prompt = request.form.get("completion_prompt")
         completion_model = request.form.get("completion_model")
 
-        app.logger.info('Model:', completion_model)
-        app.logger.info('Prompt:', completion_prompt)
+        app.logger.info('Model: %s', completion_model)
+        app.logger.info('Prompt: %s', completion_prompt)
 
         resp = None
         error = None
@@ -32,7 +33,7 @@ def index():
           # print(response)
           resp = response["choices"][0]["text"]
           
-          app.logger.info('Response:', resp)
+          app.logger.info('Response: %s', resp)
 
           resp = Markup(resp.lstrip("\n").replace('\n', '<br>'))
 
@@ -46,7 +47,7 @@ def index():
       if request.form.get("image_prompt"):
         image_prompt = request.form.get("image_prompt")
 
-        app.logger.info('Prompt:', image_prompt)
+        app.logger.info('Prompt: %s', image_prompt)
 
         
         resp = None
@@ -59,10 +60,10 @@ def index():
             size="512x512"
           )        
           resp = response['data'][0]['url']
-          app.logger.info('Response:', resp)
+          app.logger.info('Response: %s', resp)
 
         except openai.error.OpenAIError as e:
-          app.logger.error('Error:', e)
+          app.logger.error('Error: %s', e)
           error = e
 
         return render_template('index.html', image_prompt=image_prompt, image_url=resp, image_error=error)
