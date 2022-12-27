@@ -1,12 +1,19 @@
 from flask import Flask, render_template, request, Markup
 import openai
 import os
+import google.cloud.logging
 import logging
 
+# Setup OpenAI
 try:
   openai.api_key = os.environ['OPENAI_API_KEY']
 except:
   print("OPENAI_API_KEY not found")
+
+# Setup Google Cloud Logging
+client = google.cloud.logging.Client()
+client.setup_logging()
+
 
 app = Flask(__name__)
 
